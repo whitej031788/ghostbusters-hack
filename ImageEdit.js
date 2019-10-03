@@ -5,6 +5,7 @@ function JimpModule() {
     // the image you want to use for replacements, and the coordinates you want replaced
     this.editImage = function(sourceFilePath, replacePath, editCoords) {
         Jimp.read(replacePath, (err, ghostImage) => {
+            if (err) throw err;
             Jimp.read(sourceFilePath, (err, finalImage) => {
                 if (err) throw err;
                 let myWidth = finalImage.bitmap.width;
@@ -17,6 +18,18 @@ function JimpModule() {
 
                 finalImage.write('./images/product-output.jpg'); // save, probably overwrite original sourceFilePath eventually
             });
+        });
+    }
+
+    this.makeAvatarSmaller = function(buffer) {
+        Jimp.read(buffer)
+        .then(image => {
+            return image
+            .resize(256, 256) // resize
+            .quality(60) // set JPEG quality
+        })
+        .catch(err => {
+            // Handle an exception.
         });
     }
 }

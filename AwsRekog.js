@@ -4,6 +4,9 @@ AWS.config.update({region:'us-east-2'});
 const rekognition = new AWS.Rekognition();
 const request = require('request').defaults({ encoding: null });
 
+const JimpModule = require('./ImageEdit.js');
+const Jimp = new JimpModule();
+
 var fs = require('fs');
 
 function AwsRekogModule() {
@@ -13,12 +16,13 @@ function AwsRekogModule() {
             rekognition.compareFaces(myParams, function (err, data) {
                 if (err) {
                     console.log("AWS Err: ", sourceImage);
+                    topCallback([]);
                     //console.log(err, err.stack); // an error occurred
                 } else {
                     let replacementCoords = [];
                     data.UnmatchedFaces.forEach(function(face) {
                         let tmpObj = {
-                            id: (face.BoundingBox.Left.toFixed(2) * face.BoundingBox.Top.toFixed(2)) * 100,
+                            id: (face.BoundingBox.Left.toFixed(5) * face.BoundingBox.Top.toFixed(5)) * 100,
                             width: face.BoundingBox.Width,
                             height: face.BoundingBox.Height,
                             left: face.BoundingBox.Left,
