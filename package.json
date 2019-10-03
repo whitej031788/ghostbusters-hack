@@ -1,0 +1,19 @@
+{
+  "name": "ghostbusters-hack",
+  "version": "1.0.0",
+  "description": "Hackathon October 2019 Project",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/whitej031788/ghostbusters-hack.git"
+  },
+  "author": "Jamie & Sam",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/whitej031788/ghostbusters-hack/issues"
+  },
+  "homepage": "https://github.com/whitej031788/ghostbusters-hack#readme"
+}
