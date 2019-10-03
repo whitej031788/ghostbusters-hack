@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/whitej031788/ghostbusters-hack#readme",
   "dependencies": {
+    "aws-sdk": "^2.541.0",
     "axios": "^0.19.0",
     "jimp": "^0.8.4",
     "request": "^2.88.0"

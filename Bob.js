@@ -13,7 +13,8 @@ function HiBobModule() {
             let responseBody = JSON.parse(body);
             let avatars = [];
             responseBody.employees.forEach(function(employee) {
-                avatars.push(employee.about.avatar);
+                if (employee.about.avatar && employee.about.avatar.trim() != "")
+                    avatars.push(employee.about.avatar);
             });
 
             return callback(avatars);
