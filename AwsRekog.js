@@ -19,7 +19,7 @@ function AwsRekogModule() {
                     notfound: []
                 };
                 if (err) {
-                    //console.log("AWS Err: ", sourceImage);
+                    // console.log("AWS Err: ", sourceImage);
                 } else {
                     data.UnmatchedFaces.forEach(function(face) {
                         let tmpObj = {

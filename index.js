@@ -49,15 +49,15 @@ HiBob.getAvatars(function(avatars) {
                                 }
                             }
                             console.log('We have found ' + allFoundFaces.length + ' Paddle employees in this picture; everyone else is getting GHOSTED! 👻👻👻');
-
+                            //console.log(allNotFoundFaces);
                             Jimp.editImage(sourceImage, replacePath, allNotFoundFaces);
-                            process.exit();
-                        }, 7500);
+                            return;
+                        }, 5000);
                     } else {
                         if (avatarsWeHaveScanned.length <= avatars.length)
                             console.log('Scanning HiBob avatar #: ', avatarsWeHaveScanned.length);
                     }
-            })}, 1500);
+            })}, 500);
         }
     });
 });
