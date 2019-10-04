@@ -13,10 +13,10 @@ function JimpModule() {
                     let myHeight = finalImage.bitmap.height;
 
                     for (let i = 0; i < editCoords.length; i++) {
-                        let newImgObj = ghostImage.resize(Math.round(editCoords[i].width * 1.35 * myWidth), Math.round(editCoords[i].height * 1.35 * myHeight));
-                        finalImage.composite(newImgObj, Math.round(editCoords[i].left * 1.1 * myWidth), Math.round(editCoords[i].top * 1.1 * myHeight)); // put ghost face on                    
+                        let newImgObj = ghostImage.resize(Math.round(editCoords[i].width * (myWidth * 1.2)), Math.round(editCoords[i].height * (myHeight * 1.2)));
+                        finalImage.composite(newImgObj, Math.round(editCoords[i].left * myWidth), Math.round(editCoords[i].top * myHeight)); // put ghost face on                    
                     }
-                    finalImage.write('./images/output.jpg'); // save, probably overwrite original sourceFilePath eventually
+                    finalImage.write(sourceFilePath); // save, probably overwrite original sourceFilePath eventually
                 } catch(error) {
                     console.error(error);
                 }

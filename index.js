@@ -6,6 +6,7 @@ const HiBob = new HiBobModule();
 const Rekog = new RekogModule();
 const Jimp = new JimpModule();
 
+//const sourceImage = './images/legit_test.jpg';
 const sourceImage = './images/IMG_9085.JPG';
 const replacePath = './images/ed_long.png';
 
