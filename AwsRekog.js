@@ -10,13 +10,18 @@ const Jimp = new JimpModule();
 var fs = require('fs');
 
 function AwsRekogModule() {
-    this.comparePictures = function(sourceImage, targetImage, topCallback) {
+    this.comparePictures = function(sourceImage, targetImage, avatarCount, topCallback) {
         this.buildAwsParams(sourceImage, targetImage, function(params) {
             let myParams = params;
             rekognition.compareFaces(myParams, function (err, data) {
                 let retObj = {
                     found: [],
                     notfound: []
+                };
+                if (avatarCount == 0) {
+                    retObj.weAreDone = true;
+                } else {
+                    retObj.weAreDone = false;
                 }
                 if (err) {
                     console.log("AWS Err: ", sourceImage);
@@ -25,7 +30,7 @@ function AwsRekogModule() {
                 } else {
                     data.UnmatchedFaces.forEach(function(face) {
                         let tmpObj = {
-                            id: (face.BoundingBox.Left.toFixed(10) * face.BoundingBox.Top.toFixed(10)) * 100,
+                            id: (face.BoundingBox.Left.toFixed(6) * face.BoundingBox.Top.toFixed(6)) * 100,
                             width: face.BoundingBox.Width,
                             height: face.BoundingBox.Height,
                             left: face.BoundingBox.Left,
@@ -36,7 +41,7 @@ function AwsRekogModule() {
 
                     data.FaceMatches.forEach(function(face) {
                         let tmpObj = {
-                            id: (face.Face.BoundingBox.Left.toFixed(10) * face.Face.BoundingBox.Top.toFixed(10)) * 100,
+                            id: (face.Face.BoundingBox.Left.toFixed(6) * face.Face.BoundingBox.Top.toFixed(6)) * 100,
                             width: face.Face.BoundingBox.Width,
                             height: face.Face.BoundingBox.Height,
                             left: face.Face.BoundingBox.Left,
