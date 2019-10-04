@@ -10,7 +10,7 @@ const Jimp = new JimpModule();
 var fs = require('fs');
 
 function AwsRekogModule() {
-    this.comparePictures = function(sourceImage, targetImage, avatarCount, topCallback) {
+    this.comparePictures = function(sourceImage, targetImage, topCallback) {
         this.buildAwsParams(sourceImage, targetImage, function(params) {
             let myParams = params;
             rekognition.compareFaces(myParams, function (err, data) {
@@ -18,15 +18,8 @@ function AwsRekogModule() {
                     found: [],
                     notfound: []
                 };
-                if (avatarCount == 0) {
-                    retObj.weAreDone = true;
-                } else {
-                    retObj.weAreDone = false;
-                }
                 if (err) {
-                    console.log("AWS Err: ", sourceImage);
-                    topCallback(retObj);
-                    //console.log(err, err.stack); // an error occurred
+                    //console.log("AWS Err: ", sourceImage);
                 } else {
                     data.UnmatchedFaces.forEach(function(face) {
                         let tmpObj = {
@@ -49,9 +42,9 @@ function AwsRekogModule() {
                         }
                         retObj.found.push(tmpObj);
                     });
-
-                    topCallback(retObj);
                 }
+
+                topCallback(retObj);
             });
         });
     }
