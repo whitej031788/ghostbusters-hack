@@ -14,24 +14,38 @@ function AwsRekogModule() {
         this.buildAwsParams(sourceImage, targetImage, function(params) {
             let myParams = params;
             rekognition.compareFaces(myParams, function (err, data) {
+                let retObj = {
+                    found: [],
+                    notfound: []
+                }
                 if (err) {
                     console.log("AWS Err: ", sourceImage);
-                    topCallback([]);
+                    topCallback(retObj);
                     //console.log(err, err.stack); // an error occurred
                 } else {
-                    let replacementCoords = [];
                     data.UnmatchedFaces.forEach(function(face) {
                         let tmpObj = {
-                            id: (face.BoundingBox.Left.toFixed(5) * face.BoundingBox.Top.toFixed(5)) * 100,
+                            id: (face.BoundingBox.Left.toFixed(10) * face.BoundingBox.Top.toFixed(10)) * 100,
                             width: face.BoundingBox.Width,
                             height: face.BoundingBox.Height,
                             left: face.BoundingBox.Left,
                             top: face.BoundingBox.Top
                         }
-                        replacementCoords.push(tmpObj);
+                        retObj.notfound.push(tmpObj);
                     });
 
-                    topCallback(replacementCoords);
+                    data.FaceMatches.forEach(function(face) {
+                        let tmpObj = {
+                            id: (face.Face.BoundingBox.Left.toFixed(10) * face.Face.BoundingBox.Top.toFixed(10)) * 100,
+                            width: face.Face.BoundingBox.Width,
+                            height: face.Face.BoundingBox.Height,
+                            left: face.Face.BoundingBox.Left,
+                            top: face.Face.BoundingBox.Top
+                        }
+                        retObj.found.push(tmpObj);
+                    });
+
+                    topCallback(retObj);
                 }
             });
         });
